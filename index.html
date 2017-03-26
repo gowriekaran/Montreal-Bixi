@@ -4,85 +4,23 @@ Author: Gowriekaran Sinnadurai
 
 -->
 <html>
-	<head>
-		<title>Bixi</title>
-	    <meta charset="utf-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<head>
+	<title>Montreal Bixi</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./assets/css/styles.css">
+</head>
 
-		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<body>
+	<div id="notifications" class="container"></div>
+	<div id="map"></div>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./assets/js/script.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeEeT5FggsHS6hB7hBtWg2YuhpU7SEeIo&callback=initMap"></script>
+</body>
 
-		<style type="text/css">
-			#map {
-				height: 100%;
-				width: 100%;
-			}
-
-			#dataset{
-				overflow-x: scroll;
-				white-space: nowrap;
-				height: 50%;
-			}
-		</style>
-		<script type="text/javascript">
-			function initMap() {
-				var infoWindow = new google.maps.InfoWindow();
-				var uluru = {lat: 45.5017, lng: -73.5673};
-				var map = new google.maps.Map(document.getElementById('map'), {
-				  zoom: 16,
-				  center: uluru
-				});
-
-		        // Try HTML5 geolocation.
-		        if (navigator.geolocation) {
-		          navigator.geolocation.getCurrentPosition(function(position) {
-		            var pos = {
-		              lat: position.coords.latitude,
-		              lng: position.coords.longitude
-		            };
-
-		            infoWindow.setPosition(pos);
-		            infoWindow.setContent('Location found.');
-		            map.setCenter(pos);
-		          }, function() {
-		            handleLocationError(true, infoWindow, map.getCenter());
-		          });
-		        } else {
-		          // Browser doesn't support Geolocation
-		          handleLocationError(false, infoWindow, map.getCenter());
-		        }
-
-				$.getJSON("https://secure.bixi.com/data/stations.json", function(data) {
-					for (item in data) {			 	  
-						for (subItem in data[item]) {
-						    var uluru = {lat: data[item][subItem].la, lng: data[item][subItem].lo};
-					        var marker = new google.maps.Marker({
-								position: uluru,
-								map: map,
-								title: 'Station ID: ' + data[item][subItem].n
-					        });
-					        
-							var context ="<h4>Station ID: " + data[item][subItem].n + "</h4><br>" + "Station Location: " + data[item][subItem].s + "<br>" + "Available Bike(s): " + data[item][subItem].ba + "<br>" + "Empty Slot(s): " + data[item][subItem].da + "<br>" + '<a href="https://maps.google.com?q=' + data[item][subItem].la + ',' + data[item][subItem].lo + '">Get Directions</a>';
-
-							(function(marker,context) {
-								google.maps.event.addListener(marker, "click", function(e) {
-									infoWindow.setContent(context);
-									infoWindow.open(map, marker);
-								});
-							})(marker, context);
-						}
-					}
-				});
-			}
-	    </script>
-	    <script async defer
-	        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeEeT5FggsHS6hB7hBtWg2YuhpU7SEeIo&callback=initMap">
-	    </script>
-	</head>
-	<body>
-		<div id="map"></div>
-	</body>
 </html>
