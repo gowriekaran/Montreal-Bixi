@@ -1,5 +1,5 @@
 # montreal-bixi
-Just a mini project that simply processes the open data JSON file https://secure.bixi.com/data/stations.json provided by Montreal Bixi, and appends it into Google maps using a user friendly format.
+Just a mini project that processes the open data JSON file https://secure.bixi.com/data/stations.json provided by Montreal Bixi, and appends it into Google maps using a user friendly format.
 
 You can check it out live here: https://www.gowriekaran.com/montreal-bixi/
 
